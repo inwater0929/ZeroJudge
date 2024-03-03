@@ -1,0 +1,22 @@
+from functools import cmp_to_key
+from bisect import bisect_left,insort
+def comp(a,b):
+    if a[1]==b[1]: return b[0]-a[0]
+    return a[1]-b[1]
+n=8
+k=2
+a=[3, 1, 4, 3, 7, 2, 2, 5]
+b=[5, 3, 7, 4, 8, 7, 4, 6]
+v=[x for x in zip(a,b)]
+v.sort(key=cmp_to_key(comp))
+end_time=[-1]*k
+ans=0
+for start,end in v:
+    lb = bisect_left(end_time,start)
+    print(lb,end_time)
+    if lb==0: 
+      continue
+    end_time.pop(lb-1)
+    insort(end_time,end)
+    ans+=1
+print(ans)
